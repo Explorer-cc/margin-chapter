@@ -1,13 +1,13 @@
 - [ ] 代码整体风格一致性（统一的l3keys接口）
-- [ ] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
-- [ ] 双栏布局
+- [X] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
+- [X] 双栏布局
 - [ ] 基于 `ctex`的 `format`方法的标题样式设计
   - [ ] `chapter`
   - [ ] `section`
   - [ ] `subsection`
   - [ ] `subsubsection`
-- [ ] 基于 `tcolorbox`的 `breakable`盒子（最好用 `tcbskin`实现，refs: https://tex.stackexchange.com/a/747203/322482 ）
-- [ ] 实现简单的 `enumerate`编号样式
+- [X] 基于 `tcolorbox`的 `breakable`盒子（最好用 `tcbskin`实现，refs: https://tex.stackexchange.com/a/747203/322482 ）
+- [X] 实现简单的 `enumerate`编号样式
 - [ ] 页眉页脚样式设置
 - [X] 实现页边距的指示条
   - [ ] 暴露 `l3keys`接口
