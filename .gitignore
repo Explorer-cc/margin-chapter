@@ -1,0 +1,109 @@
+# LaTeX 编译产物
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.lb
+
+# 交叉引用
+*.xref
+
+# 目录相关
+*.bbl
+*.bcf
+*.blg
+*.bcf
+*.run.xml
+
+# 索引
+*.idx
+*.ilg
+*.ind
+*.ist
+
+# Bibliography
+*.bst
+
+# hyperref
+*.brf
+
+# 生成文件
+*.dvi
+*.ps
+*.synctex.gz
+*.synctex(busy)
+*.pdfsync
+
+# Makeindex
+*.nlo
+*.nls
+
+# Listings
+*.lol
+
+# 临时文件
+*.1
+*.2
+*.3
+*.bak
+*.dpth
+*.md5
+*.auxlock
+*.loc
+*.soc
+*.loa
+
+# 代码高亮
+*.pyg
+*.pygtex
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# TikZ & PGF
+*.dpth
+*.md5
+*.auxlock
+
+# todonotes
+*.tdo
+
+# 各类编辑器/IDE
+## TeXstudio
+*.synctex.gz*
+
+## VS Code
+.vscode/
+
+## TeXworks
+*.synctex.gz(busy)
+
+## Vim
+*.swp
+*.swo
+*~
+
+## Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+Desktop.ini
