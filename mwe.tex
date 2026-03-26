@@ -10,14 +10,14 @@
 \makeatletter
 \ExplSyntaxOn
 \tl_new:N \l_mwe_matrix_content_tl
-\property_new:nnnn { last chapter } { now } { 1 } {
+\property_new:nnnn { last-chapter } { now } { 1 } {
     \arabic{chapter}
 }
 \hook_gput_code:nnn { enddocument } { . } {
-  \property_record:nn { mwe/matrix } { last chapter }
+  \property_record:nn { mwe/matrix } { last-chapter }
 }
 \hook_gput_code:nnn { shipout/background } { . } {
-    \int_step_inline:nn { \property_ref:nn { mwe/matrix } { last chapter } } {
+    \int_step_inline:nn { \property_ref:nn { mwe/matrix } { last-chapter } } {
         \int_compare:nNnT { #1 } = { \thechapter } {
             \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=magenta]| }
         }
@@ -52,7 +52,7 @@
 }
 \ExplSyntaxOff
 \makeatother
-\pagestyle{empty}
+\pagestyle{plain}
 \begin{document}
 
 \foreach \nn in {1,...,13} {
