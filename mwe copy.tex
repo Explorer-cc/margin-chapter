@@ -1,0 +1,65 @@
+\documentclass[12pt,openany,oneside]{book}
+\usepackage{libertine}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usepackage[showframe]{geometry}
+\usepackage{totcount}
+\regtotcounter{chapter}
+\makeatletter
+\ExplSyntaxOn
+\tl_new:N \l_matrix_content_tl
+\int_step_inline:nn {10} {
+    \ifnum #1=4\relax%<-just for example
+        \tl_put_right:Nn \l_matrix_content_tl {|[fill=magenta]|}
+    \fi
+    \tl_put_right:Nn \l_matrix_content_tl {#1\\}
+}
+% I want something like this.. but not work
+% \int_step_inline:nn {\total{chapter}} {
+%     \ifnum #1=\thechapter\relax
+%         \tl_put_right:Nn \l_matrix_content_tl {|[fill=magenta]|}
+%     \fi
+%     \tl_put_right:Nn \l_matrix_content_tl {#1\\}
+% }
+\AddToHook{shipout/background}{
+    \put (0pt,-\paperheight) {%
+        \begin{tikzpicture}[%
+            overlay,remember~picture,
+            marginpage/.style={
+                matrix~of~nodes,
+                nodes={draw, align=center,fill=cyan, minimum~size=1.2cm,font=\sffamily\bfseries\Huge},
+                row~sep=.75cm,
+                column~sep=0mm,
+                inner~sep=0pt,
+                outer~sep=0pt,
+            }
+        ]%
+        %\node[draw,anchor=west,font=\sffamily\bfseries\Huge] at (current page marginpar area.west) {\thechapter/\total{chapter}};
+        \if@twoside
+            \ifodd\value{page}\relax
+                \matrix[anchor=east,marginpage] at (current~page.east){\l_matrix_content_tl};
+            \else%
+                \matrix[anchor=west,marginpage] at (current~page.west){\l_matrix_content_tl};
+            \fi%
+        \else
+            \matrix[anchor=east,marginpage] at (current~page.east){\l_matrix_content_tl};
+        \fi
+        \end{tikzpicture}%
+    }%
+}
+\ExplSyntaxOff
+\makeatother
+\pagestyle{empty}
+\begin{document}
+
+\chapter{First Chapter}
+\lipsum[1-10]
+
+\chapter{Second Chapter}
+\lipsum[1-10]
+
+\chapter{Third Chapter}
+\lipsum[1-10]
+
+\end{document}
