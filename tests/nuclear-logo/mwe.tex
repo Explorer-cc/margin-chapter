@@ -1,0 +1,18 @@
+\documentclass[tikz,border=5pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[
+    orbit/.pic={
+        \draw[ultra thick,gray] (0,2) 
+            arc[start angle=90,delta angle=360,x radius=.85cm, y radius=2cm]
+            node[pos=.6,circle,fill=white,minimum size=15pt] {}
+            node[pos=.6,circle,fill=gray] {}
+            ;
+    },
+    atom/.pic={\fill[#1] circle[radius=8pt];}
+]
+    \pic{orbit};\pic[rotate=120] {orbit};\pic[rotate=-120] {orbit};
+    \foreach \i in {30,150,270}{ \pic at (\i:.45) {atom=gray};}
+    \foreach \i in {90,210,330}{ \pic at (\i:.45) {atom=cyan};}
+    \pic {atom=gray};
+\end{tikzpicture}
+\end{document}

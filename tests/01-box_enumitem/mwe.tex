@@ -1,0 +1,98 @@
+\documentclass[openany,oneside,twocolumn]{book}
+% \usepackage[fontset=fandol]{ctex}
+% \usepackage[base]{babel}
+\usepackage{libertine}
+\usepackage{lipsum,zhlipsum}
+\usepackage{tikz}
+\usepackage{enumitem}
+\newcommand*\squarednum[1]{\tikz[baseline=(char.base)]{\node[rectangle, draw, semithick, inner sep=0pt, minimum size = 1em, font=\sffamily] (char) {#1};}}
+\setlist[enumerate]{label=\protect\squarednum{\arabic*},nosep}
+\usepackage[many]{tcolorbox}
+% https://tex.stackexchange.com/a/747203
+\tikzset{mybox frame/.style={tcbcolframe, line width=1.5pt}}
+\tcbsubskin{mybox}{empty}{
+  frame engine=path,
+  attach boxed title to top left={xshift=.25cm,yshift=-.7\baselineskip},
+  boxed title style={
+    skin=empty,frame engine=path,
+    frame empty,
+  },
+  % frame code specific for unbroken boxes
+  frame code={
+    \draw[mybox frame]
+        (title.west) -| (frame.south west) -- (frame.south east) |- (title.east);
+  },
+  % frame code for broken boxes
+  skin first is subskin of={emptyfirst}{
+    frame code={
+      \draw[mybox frame]
+        (title.west) -| (frame.south west)
+        (frame.south east) |- (title.east);
+    }
+  },
+  skin middle is subskin of={emptymiddle}{
+    frame code={
+      \draw[mybox frame]
+          (frame.north east) -- (frame.south east)
+          (frame.north west) -- (frame.south west);
+    }
+  },
+  skin last is subskin of={emptylast}{
+    frame code={
+      \draw[mybox frame]
+          (frame.north east) -- (frame.south east)
+          -- (frame.south west) -- (frame.north west);
+    }
+  }
+}
+
+\NewTColorBox{mybox}{ O{} m }{
+  breakable, skin=mybox,
+  before skip=.1cm,
+  after skip=.25cm,
+% before title={【},after title={】},
+  before title={[\,},after title={\,]},
+% colframe=green!75!black,
+  colframe=violet!85,
+  fonttitle=\bfseries\large,
+  title={#2},#1,
+  coltitle=tcbcolframe,% delay after #1
+}
+
+\begin{document}
+
+\lipsum[1-2]
+
+\begin{enumerate}
+    \item AAAA
+    \item BBBB
+    \item \lipsum[1][1-2]
+    \item CCCC
+\end{enumerate}
+
+\lipsum[2][1-8]
+
+\begin{mybox}{Euler Equation}
+    \lipsum[1][1-5]
+\end{mybox}
+
+\lipsum[3]
+
+\begin{mybox}[colframe=olive]{Euler Equation}
+    \begin{enumerate}
+        \item AAAA
+        \item BBBB
+        \item \lipsum[1][1-2]
+        \item DDDD
+    \end{enumerate}
+\end{mybox}
+
+\lipsum[2]
+
+\begin{mybox}[colframe=teal]{Euler Equation}
+    \lipsum[1-4]
+\end{mybox}
+
+\lipsum[1-2]
+
+\end{document}
