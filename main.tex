@@ -1,98 +1,69 @@
-\documentclass[openany,oneside,twocolumn]{book}
-% \usepackage[fontset=fandol]{ctex}
-% \usepackage[base]{babel}
+\documentclass[12pt,openany]{book}
 \usepackage{libertine}
-\usepackage{lipsum,zhlipsum}
+\usepackage{lipsum}
 \usepackage{tikz}
-\usepackage{enumitem}
-\newcommand*\squarednum[1]{\tikz[baseline=(char.base)]{\node[rectangle, draw, semithick, inner sep=0pt, minimum size = 1em, font=\sffamily] (char) {#1};}}
-\setlist[enumerate]{label=\protect\squarednum{\arabic*},nosep}
-\usepackage[many]{tcolorbox}
-% https://tex.stackexchange.com/a/747203
-\tikzset{mybox frame/.style={tcbcolframe, line width=1.5pt}}
-\tcbsubskin{mybox}{empty}{
-  frame engine=path,
-  attach boxed title to top left={xshift=.25cm,yshift=-.7\baselineskip},
-  boxed title style={
-    skin=empty,frame engine=path,
-    frame empty,
-  },
-  % frame code specific for unbroken boxes
-  frame code={
-    \draw[mybox frame]
-        (title.west) -| (frame.south west) -- (frame.south east) |- (title.east);
-  },
-  % frame code for broken boxes
-  skin first is subskin of={emptyfirst}{
-    frame code={
-      \draw[mybox frame]
-        (title.west) -| (frame.south west)
-        (frame.south east) |- (title.east);
-    }
-  },
-  skin middle is subskin of={emptymiddle}{
-    frame code={
-      \draw[mybox frame]
-          (frame.north east) -- (frame.south east)
-          (frame.north west) -- (frame.south west);
-    }
-  },
-  skin last is subskin of={emptylast}{
-    frame code={
-      \draw[mybox frame]
-          (frame.north east) -- (frame.south east)
-          -- (frame.south west) -- (frame.north west);
-    }
-  }
+\usetikzlibrary{matrix}
+\usepackage{geometry}
+% https://tex.stackexchange.com/a/761258/322482
+\makeatletter
+\ExplSyntaxOn
+\tl_new:N \l_mwe_matrix_content_tl
+\property_new:nnnn { last-chapter } { now } { 1 } {
+    \arabic{chapter}
 }
-
-\NewTColorBox{mybox}{ O{} m }{
-  breakable, skin=mybox,
-  before skip=.1cm,
-  after skip=.25cm,
-% before title={【},after title={】},
-  before title={[\,},after title={\,]},
-% colframe=green!75!black,
-  colframe=violet!85,
-  fonttitle=\bfseries\large,
-  title={#2},#1,
-  coltitle=tcbcolframe,% delay after #1
+\hook_gput_code:nnn { enddocument } { . } {
+  \property_record:nn { mwe/matrix } { last-chapter }
 }
-
+\hook_gput_code:nnn { shipout/background } { . } {
+    \int_step_inline:nn { \property_ref:nn { mwe/matrix } { last-chapter } } {
+        \int_compare:nNnT { #1 } = { \value{chapter} } {
+            \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=magenta]| }
+        }
+        \tl_put_right:Nn \l_mwe_matrix_content_tl { #1 \\ }
+    }
+    \begin{tikzpicture}[%
+            overlay,remember~picture,
+            marginpage/.style={
+                matrix~of~nodes,
+                nodes={
+                    draw, align=center,
+                    fill=cyan, minimum~size=1.2cm,
+                    font=\sffamily\bfseries\Huge
+                },
+                row~sep=.5cm,
+                column~sep=0mm,
+                inner~sep=0pt,
+                outer~sep=0pt,
+            }
+        ]%
+        % \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
+        \if@twoside
+            \ifodd\value{page}\relax
+                \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
+            \else%
+                \matrix[anchor=west,marginpage] at (current~page.west){\l_mwe_matrix_content_tl};
+            \fi%
+        \else
+            \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
+        \fi
+    \end{tikzpicture}%
+}
+\ExplSyntaxOff
+\makeatother
+\pagestyle{plain}
 \begin{document}
 
-\lipsum[1-2]
+\foreach \nn in {1,...,3} {
+    \chapter{Test Chapter \nn}
+    \lipsum[1]
+}
 
-\begin{enumerate}
-    \item AAAA
-    \item BBBB
-    \item \lipsum[1][1-2]
-    \item CCCC
-\end{enumerate}
+\chapter*{ Cunning Chapter }
+\lipsum[1-3]
 
-\lipsum[2][1-8]
-
-\begin{mybox}{Euler Equation}
-    \lipsum[1][1-5]
-\end{mybox}
-
-\lipsum[3]
-
-\begin{mybox}[colframe=olive]{Euler Equation}
-    \begin{enumerate}
-        \item AAAA
-        \item BBBB
-        \item \lipsum[1][1-2]
-        \item DDDD
-    \end{enumerate}
-\end{mybox}
-
-\lipsum[2]
-
-\begin{mybox}[colframe=teal]{Euler Equation}
-    \lipsum[1-4]
-\end{mybox}
-
-\lipsum[1-2]
+\foreach \nn in {4,...,6} {
+    \chapter{Test Chapter \nn}
+    \lipsum[1]
+}
 
 \end{document}
