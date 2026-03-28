@@ -1,0 +1,58 @@
+\documentclass[fontset=fandol]{ctexbook}
+\usepackage[
+    a4paper,
+    hmargin=1.5cm,
+    vmargin=2.5cm,
+    ]{geometry}
+\usepackage{zhlipsum}
+\usepackage{tikz}
+\newcommand\chaptertitleformat[1]{%
+    \begin{tikzpicture}[
+        orbit/.pic={
+            \draw[ultra thick,gray] (0,2) 
+                arc[start angle=90,delta angle=360,x radius=.85cm,y radius=2cm]
+                node[pos=.6,circle,fill=white,inner sep=0pt,minimum size=15pt] {}
+                node[pos=.6,circle,fill=gray,inner sep=0pt,minimum size=10pt] {}
+            ;
+        },
+        atom/.pic={\fill[##1] circle[radius=7.5pt];},
+        nuclear/.pic={
+            \pic{orbit};\pic[rotate=120] {orbit};\pic[rotate=-120] {orbit};
+            \foreach \i in {30,150,270}{ \pic at (\i:.45) {atom=gray};}
+            \foreach \i in {90,210,330}{ \pic at (\i:.45) {atom=cyan};}
+            \pic {atom=gray};
+        }
+    ]
+        \fill (-3,3) -- ++(1.25,0) -- ++(1.75,-1.75) -- ++(0,-1.25) -- ++(-1.25,0) -- ++(-1.75,1.75) --cycle;
+        \draw[rotate=45,fill=gray!75] ({-1.5+1.5},1.5) arc[start angle=0,delta angle=360,x radius=1.5cm,y radius=.7cm];
+        \path[every node/.style={font=\sffamily,text=white}] 
+              (-1.5,1.5) node[font=\sffamily\Huge] {\thechapter}
+              (-2.25,2.25) node[scale=.9] {第}
+              (-.75,.75) node[scale=.9] {章};
+        % strange here... the coordinate system inconsistency likely...
+        \draw[thick] 
+        (.5,.75) node[circle,draw,fill=gray!75,inner sep=1.5pt,anchor=west] {}
+        -- 
+        node[pos=.25,above=5pt,anchor=south,font=\sffamily\Huge,scale=1.5] {#1} 
+        % https://tex.stackexchange.com/a/761324/322482
+        pic[pos=.9,yshift=.5cm,transform shape,scale=.5] {nuclear}
+        ++(.8\textwidth,0) node[circle,draw,fill=gray!75,inner sep=1.5pt,anchor=west] {}
+        ;
+    \end{tikzpicture}%
+}
+
+\ctexset{
+    chapter = {
+        name = {}, 
+        number = {},%这里不可用 numbering=false,这导致缺少\thechapter的定义
+        titleformat = \chaptertitleformat
+    }
+}
+
+\begin{document}
+
+\chapter{AAAA}
+\section{aaaa}
+\zhlipsum[1-3]
+
+\end{document}
