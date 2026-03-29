@@ -1,4 +1,5 @@
 \documentclass[tikz,border=5pt]{standalone}
+\usetikzlibrary{backgrounds}
 \begin{document}
 \begin{tikzpicture}[line join=round]
     \coordinate (start) at (0,1.5); 
@@ -8,9 +9,17 @@
         ++(3,0) coordinate (doublestart) 
         ++(-.5,-1.5) coordinate (doubleend) 
         -- (end);
-    \draw[cyan,double,double distance=2.5pt] 
+    \begin{scope}[on background layer]
+        \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);
+        \draw[
+            cyan,double,
+            double distance=2.5pt,
+            shorten >=-2pt,
+            shorten <=-2pt
+            ] 
         (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend)
-    ;
+        ;
+    \end{scope}
     \end{tikzpicture}
 
 \end{document}

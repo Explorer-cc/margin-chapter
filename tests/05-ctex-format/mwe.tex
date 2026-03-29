@@ -5,6 +5,7 @@
     vmargin=2.5cm,
     ]{geometry}
 \usepackage{zhlipsum}
+\usepackage{showframe}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric,shadows,positioning}
 \tikzset{circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
@@ -48,17 +49,6 @@
         ;
     \end{tikzpicture}%
 }
-% ToDo:这里需要设计一个自定义带计数器的section
-% \newcommand\sectiontitleformat[1]{%
-%     \begin{tikzpicture}[line join=round]
-%     \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2.5cm, minimum height=1.75cm, circular glow={fill=gray!50,shadow scale=1.1}] (ell) {\S\;\arabic{section}};
-%     \node[right=1.5cm of ell,anchor=west,font=\sffamily\Huge] {#1};
-%     \coordinate (ellstart) at ([xshift=.75cm,yshift=.75cm]ell.east);
-%     \coordinate (ellend) at ([xshift=.25cm,yshift=-.75cm]ell.east);
-%     \draw[magenta] (ellstart) node[circlewidget,anchor=west] {} -- ++(.8\textwidth,0) coordinate (doublestart) ++(-.5,-1.5) coordinate (doubleend) -- (ellend) node[circlewidget,anchor=west] {};
-%     \draw[cyan,double,double distance=2.5pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
-%     \end{tikzpicture}
-% }
 \newcommand\sectiontitleformat[1]{%
     \begin{tikzpicture}[line join=round]
     \node[
@@ -80,6 +70,15 @@
     \draw[ultra thick] ([yshift=.9cm]end.center) -- ++(-2.5cm,0);
     \end{tikzpicture}
 }
+\newcommand\subsectiontitleformat[1]{%
+    \begin{tikzpicture}[line join=round]
+    \node[fill=black!90,rounded corners,
+        font=\sffamily\Large,text=white,
+        inner sep=5pt, 
+    ] (subsec) {\thesubsection};
+    \draw[ultra thick] (subsec) -- node[pos=.05,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.925\textwidth,0) node[circlewidget,line width=.8pt] {};
+    \end{tikzpicture}
+}
 \ctexset{
     chapter = {
         name = {}, 
@@ -91,19 +90,48 @@
         number = {},
         titleformat = \sectiontitleformat
     },
-    % subsection = {
-    %     name = {}, 
-    %     number = {},
-    %     titleformat = \subsectiontitleformat
-    % },
+    subsection = {
+        name = {}, 
+        number = {},
+        titleformat = \subsectiontitleformat
+    },
 }
+
+% \newcommand\sectiontitleformat[1]{%
+%     \begin{tikzpicture}[line join=round]
+%     \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2.5cm, minimum height=1.75cm, circular glow={fill=gray!50,shadow scale=1.1}] (ell) {\S\;\arabic{section}};
+%     \node[right=1.5cm of ell,anchor=west,font=\sffamily\Huge] {#1};
+%     \coordinate (ellstart) at ([xshift=.75cm,yshift=.75cm]ell.east);
+%     \coordinate (ellend) at ([xshift=.25cm,yshift=-.75cm]ell.east);
+%     \draw[magenta] (ellstart) node[circlewidget,anchor=west] {} -- ++(.8\textwidth,0) coordinate (doublestart) ++(-.5,-1.5) coordinate (doubleend) -- (ellend) node[circlewidget,anchor=west] {};
+%     \draw[cyan,double,double distance=2.5pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
+%     \end{tikzpicture}
+% }
+% ToDo:这里需要设计一个自定义带计数器的"section"吗
+
 
 \begin{document}
 
 \chapter{AAAAAAAAA}
 % \SectionPart{aaaa test}
-
 \section{aaaabbbbbppppp}
-\zhlipsum[1-3]
+\zhlipsum[1]
+
+\subsection{AAA你好啊啊啊BBB}
+\zhlipsum[2]
+
+\subsection{AAA你好啊啊啊BBB}
+\zhlipsum[3]
+
+\chapter{我的世界你好你好}
+% \SectionPart{aaaa test}
+\section{aaaabbbbbppppp}
+\zhlipsum[1]
+
+\subsection{AAA你好啊啊啊BBB}
+\zhlipsum[2]
+
+\subsection{AAA你好啊啊啊BBB}
+\zhlipsum[3]
 
 \end{document}
