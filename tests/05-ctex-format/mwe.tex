@@ -8,7 +8,7 @@
 \usepackage{showframe}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric,shadows,positioning}
-\tikzset{circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
+\tikzset{line cap=round,line join=round,circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
 \newcommand\chaptertitleformat[1]{%
     \begin{tikzpicture}[
         orbit/.pic={
@@ -97,23 +97,33 @@
     },
 }
 
-% \newcommand\sectiontitleformat[1]{%
-%     \begin{tikzpicture}[line join=round]
-%     \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2.5cm, minimum height=1.75cm, circular glow={fill=gray!50,shadow scale=1.1}] (ell) {\S\;\arabic{section}};
-%     \node[right=1.5cm of ell,anchor=west,font=\sffamily\Huge] {#1};
-%     \coordinate (ellstart) at ([xshift=.75cm,yshift=.75cm]ell.east);
-%     \coordinate (ellend) at ([xshift=.25cm,yshift=-.75cm]ell.east);
-%     \draw[magenta] (ellstart) node[circlewidget,anchor=west] {} -- ++(.8\textwidth,0) coordinate (doublestart) ++(-.5,-1.5) coordinate (doubleend) -- (ellend) node[circlewidget,anchor=west] {};
-%     \draw[cyan,double,double distance=2.5pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
-%     \end{tikzpicture}
-% }
-% ToDo:这里需要设计一个自定义带计数器的"section"吗
-
+\newcounter{SectionPart}[chapter]
+% https://tex.stackexchange.com/a/761359/322482
+\newcommand\SectionPart[1]{%
+    \refstepcounter{SectionPart}%
+    \par\noindent\begin{tikzpicture}
+    \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2.25cm, minimum height=1.65cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
+    \node[right=1.5cm of ell,anchor=west,font=\sffamily\huge] {#1};
+    \coordinate (ellstart) at ([xshift=.75cm,yshift=.75cm]ell.east);
+    \coordinate (ellend) at ([xshift=.25cm,yshift=-.75cm]ell.east);
+    \path (ellstart) 
+        ++(.825\textwidth,0) coordinate (doublestart) 
+        ++(-.5,-1.5) coordinate (doubleend);
+    \scoped{
+        \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);% clip the double path
+        \draw[gray!75,thick,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
+    }
+    \draw[thick,gray!75] 
+        (ellstart) node[circlewidget,anchor=west] {} -- ([xshift=2pt]doublestart) % details not perrfect here ;-(
+        ([xshift=2pt]doubleend) -- (ellend) node[circlewidget,anchor=west] {}
+    ;
+    \end{tikzpicture}
+}
 
 \begin{document}
 
 \chapter{AAAAAAAAA}
-% \SectionPart{aaaa test}
+\SectionPart{Just 一个测试 test}
 \section{aaaabbbbbppppp}
 \zhlipsum[1]
 
