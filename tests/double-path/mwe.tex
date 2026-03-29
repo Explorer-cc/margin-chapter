@@ -1,0 +1,16 @@
+\documentclass[tikz,border=5pt]{standalone}
+\begin{document}
+\begin{tikzpicture}[line join=round]
+    \coordinate (start) at (0,1.5); 
+    \coordinate (end) at (0,0);
+    \draw[magenta] 
+        (start) -- 
+        ++(3,0) coordinate (doublestart) 
+        ++(-.5,-1.5) coordinate (doubleend) 
+        -- (end);
+    \draw[cyan,double,double distance=2.5pt] 
+        (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend)
+    ;
+    \end{tikzpicture}
+
+\end{document}
