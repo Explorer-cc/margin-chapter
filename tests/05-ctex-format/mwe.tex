@@ -9,7 +9,7 @@
 \newcommand\chaptertitleformat[1]{%
     \begin{tikzpicture}[
         orbit/.pic={
-            \draw[ultra thick,gray] (0,2) 
+            \draw[line width=1pt,gray] (0,2) 
                 arc[start angle=90,delta angle=360,x radius=.85cm,y radius=2cm]
                 node[pos=.6,circle,fill=white,inner sep=0pt,minimum size=15pt] {}
                 node[pos=.6,circle,fill=gray,inner sep=0pt,minimum size=10pt] {}
@@ -23,20 +23,25 @@
             \pic {atom=gray};
         }
     ]
-        \fill (-3,3) -- ++(1.25,0) -- ++(1.75,-1.75) -- ++(0,-1.25) -- ++(-1.25,0) -- ++(-1.75,1.75) --cycle;
-        \draw[rotate=45,fill=gray!75] ({-1.5+1.5},1.5) arc[start angle=0,delta angle=360,x radius=1.5cm,y radius=.7cm];
+        \fill[rotate=45,gray!50] (1.75,0) 
+            arc[start angle=0,delta angle=360,x radius=1.75cm,y radius=.7cm]
+            node[circle,pos=.075,fill=white,inner sep=0pt,minimum size=15pt] {}
+            node[circle,pos=.075,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
+            node[circle,pos=.575,fill=white,inner sep=0pt,minimum size=15pt] {}
+            node[circle,pos=.575,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
+            ;
+        \fill (-1.5,1.5) -- ++(1,0) -- ++(2,-2) -- ++(0,-1) -- ++(-1,0) -- ++(-2,2) --cycle;
         \path[every node/.style={font=\sffamily,text=white}] 
-              (-1.5,1.5) node[font=\sffamily\Huge] {\thechapter}
-              (-2.25,2.25) node[scale=.9] {第}
-              (-.75,.75) node[scale=.9] {章};
-        % strange here... the coordinate system inconsistency likely...
+              (0,0) node[font=\sffamily\Huge] {\thechapter}
+              (-.75,.75) node[scale=.9] {第}
+              (.75,-.75) node[scale=.9] {章};
         \draw[thick] 
-        (.5,.75) node[circle,draw,fill=gray!75,inner sep=1.5pt,anchor=west] {}
+        (2,-.75) node[circle,draw,fill=gray!75,inner sep=1.5pt,anchor=west] {}
         -- 
-        node[pos=.25,above=5pt,anchor=south,font=\sffamily\Huge,scale=1.5] {#1} 
+        node[pos=.25,above=5pt,anchor=south,font=\sffamily\Huge,scale=1.25] {#1} 
         % https://tex.stackexchange.com/a/761324/322482
-        pic[pos=.9,yshift=.5cm,transform shape,scale=.5] {nuclear}
-        ++(.8\textwidth,0) node[circle,draw,fill=gray!75,inner sep=1.5pt,anchor=west] {}
+        pic[pos=.85,yshift=.75cm,transform shape,scale=.75] {nuclear}
+        ++(.65\textwidth,0) node[circle,draw,fill=gray!75,inner sep=1.5pt,anchor=west] {}
         ;
     \end{tikzpicture}%
 }
