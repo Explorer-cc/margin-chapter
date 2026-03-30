@@ -1,15 +1,17 @@
-- [ ] 代码整体风格一致性已经sty的封装（统一的l3keys接口）
+- [ ] 代码整体风格一致性
+- [ ] 当前代码在正文没有 `\chapter`的时候会报神秘错误，综合考虑宏包与文档类的设置，增加关闭marginblock功能的选项，并做好警告提示
+- [ ] 修复一下目前的 twocolumn模式存在的中线问题
 - [X] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
 - [X] 双栏布局
-- [x] 基于 `ctex`的 `format`方法的标题样式设计
-  - [x] `chapter`
-  - [x] `section`
-  - [x] `subsection`
-- [ ] 独立的`\sectionPart`模块
+- [X] 基于 `ctex`的 `format`方法的标题样式设计
+  - [X] `chapter`
+  - [X] `section`
+  - [X] `subsection`
+- [X] 独立的 `\sectionPart`模块
 - [X] 基于 `tcolorbox`的 `breakable`盒子（最好用 `tcbskin`实现，refs: https://tex.stackexchange.com/a/747203/322482 ）
 - [X] 实现简单的 `enumerate`编号样式
-- [x] 页眉页脚样式设置
+- [X] 页眉页脚样式设置
 - [X] 实现页边距的指示条
-  - [ ] 暴露 `l3keys`接口
+  - [X] 暴露 `l3keys`接口
   - [X] 借助 `ltproperty`实现动态获取 `chapter`数
   - [X] 实现 `twocolumn`与奇偶数页的控制
