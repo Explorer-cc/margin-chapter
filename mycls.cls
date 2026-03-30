@@ -67,40 +67,40 @@
             node[circle,pos=.575,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
             ;
         \fill (-1.5,1.5) -- ++(1,0) -- ++(2,-2) -- ++(0,-1) -- ++(-1,0) -- ++(-2,2) --cycle;
-        \path[every node/.style={font=\sffamily,text=white}] 
-              (0,0) node[font=\sffamily\Huge] {\thechapter}
-              (-.75,.75) node[scale=.9] {第}
-              (.75,-.75) node[scale=.9] {章};
+        \path[every node/.style={font=\sffamily\huge,text=white}] 
+              (0,0) node {\thechapter}
+              (-.75,.75) node[scale=.8] {第}
+              (.75,-.75) node[scale=.8] {章};
         \draw[thick] 
         (2,-.75) node[circlewidget,anchor=west] {}
         -- 
-        node[pos=.05,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\Huge,scale=1.25] {#1} 
+        node[pos=.01,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
         pic[pos=.85,yshift=.75cm,scale=.75,transform shape] {nuclear}
-        ++(.75\textwidth,0) node[circlewidget,anchor=west] {}
+        ++(.75\linewidth,0) node[circlewidget,anchor=west] {}
         ;
     \end{tikzpicture}%
 }
 \newcommand\sectiontitleformat[1]{%
     \begin{tikzpicture}[line join=round]
     \node[
-        fill,rounded corners=.6cm,
-        font=\sffamily\Huge,text=white,
+        fill,rounded corners=.3cm,
+        font=\sffamily\Large,text=white,
         inner sep=5pt, 
-        minimum width=2.25cm, 
-        minimum height=1.35cm,
+        minimum width=1.5cm, 
+        minimum height=.75cm,
         general shadow={fill=gray!25,shadow scale=1.15}
     ] (sec) {\thesection};
-    \coordinate (start) at ([xshift=1.25cm,yshift=.25cm]sec.east);
+    \coordinate (start) at ([xshift=.35cm,yshift=.35cm]sec.east);
     \draw[ultra thick,gray!75] ([xshift=-.15cm]start) -- ++(.35,-.7);
     \draw[ultra thick] (start) -- ++(.35,-.7) coordinate (tmp);
     \draw[ultra thick,gray!75] (tmp) -- 
-    node[pos=.05,above=7.5pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,text=black,scale=1.25] {#1} 
-    ++(.75\textwidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
-    \draw[gray!25,ultra thick] ([yshift=.5cm]end.center) -- ++(-1cm,0);
-    \draw[gray!75,ultra thick] ([yshift=.7cm]end.center) -- ++(-1.75cm,0);
-    \draw[ultra thick] ([yshift=.9cm]end.center) -- ++(-2.5cm,0);
+    node[xshift=-.4cm,pos=.01,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
+    ++(.725\linewidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
+    \draw[gray!25,ultra thick] ([yshift=.4cm]end.center) -- ++(-1cm,0);
+    \draw[gray!75,ultra thick] ([yshift=.6cm]end.center) -- ++(-1.75cm,0);
+    \draw[ultra thick] ([yshift=.8cm]end.center) -- ++(-2.5cm,0);
     \end{tikzpicture}
 }
 \newcommand\subsectiontitleformat[1]{%
@@ -109,24 +109,24 @@
         font=\sffamily\Large,text=white,
         inner sep=5pt, 
     ] (subsec) {\thesubsection};
-    \draw[ultra thick] (subsec) -- node[pos=.05,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.925\textwidth,0) node[circlewidget,line width=.8pt] {};
+    \draw[ultra thick] (subsec) -- node[draw,pos=.05,anchor=west,font=\sffamily\large] {#1} ++(.9\linewidth,0) node[circlewidget,line width=.8pt] {};
     \end{tikzpicture}
 }
 \ctexset{
     chapter = {
         name = {}, 
         number = {},%这里不可用 numbering=false,将导致缺少\thechapter的定义
-        titleformat = \chaptertitleformat
+        format = \centering\chaptertitleformat
     },
     section = {
         name = {}, 
         number = {},
-        titleformat = \sectiontitleformat
+        format = \centering\sectiontitleformat
     },
     subsection = {
         name = {}, 
         number = {},
-        titleformat = \subsectiontitleformat
+        format = \centering\subsectiontitleformat
     },
 }
 
@@ -135,23 +135,22 @@
 \newcommand\SectionPart[1]{%
     \refstepcounter{SectionPart}%
     \par\noindent\begin{tikzpicture}
-    \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2.25cm, minimum height=1.65cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
-    \node[right=1.5cm of ell,anchor=west,font=\sffamily\huge] {#1};
-    \coordinate (ellstart) at ([xshift=.75cm,yshift=.75cm]ell.east);
-    \coordinate (ellend) at ([xshift=.25cm,yshift=-.75cm]ell.east);
+    \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2cm, minimum height=1.25cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
+    \node[right=.75cm of ell,anchor=west,font=\sffamily\huge] {#1};
+    \coordinate (ellstart) at ([xshift=.5cm,yshift=.75cm]ell.east);
+    \coordinate (ellend) at ([xshift=.1cm,yshift=-.75cm]ell.east);
     \path (ellstart) 
-        ++(.825\textwidth,0) coordinate (doublestart) 
+        ++(.7\linewidth,0) coordinate (doublestart) 
         ++(-.5,-1.5) coordinate (doubleend);
     \scoped{
         \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);% clip the double path
-        \draw[gray!75,thick,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
+        \draw[gray!75,line width=1pt,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
     }
-    \draw[thick,gray!75] 
-        (ellstart) node[circlewidget,anchor=west] {} -- ([xshift=2pt]doublestart) % details not perrfect here ;-(
+    \draw[line width=1pt,gray!75] 
+        (ellstart) node[circlewidget,anchor=west] {} -- ([xshift=2pt]doublestart) % details not perfect here ;-(
         ([xshift=2pt]doubleend) -- (ellend) node[circlewidget,anchor=west] {}
     ;
     \end{tikzpicture}
 }
-
 
 \endinput
