@@ -10,7 +10,7 @@
 
 %%%%%%%%%%%%%%%
 
-\usepackage{multicol}
+\RequirePackage{multicol}
 \setlength{\columnsep}{20pt}
 \setlength{\columnseprule}{.4pt}
 % https://tex.stackexchange.com/a/761278
@@ -20,14 +20,14 @@
 \AtEndDocument{\ifnum\col@number>1\end{multicols}\fi}
 
 %%%%%%%%%%%%%%%%
-\usepackage[
+\RequirePackage[
         a4paper,
         hmargin=1.75cm,
         vmargin=2.5cm,
         showframe,
     ]{geometry}
 
-\usepackage{fancyhdr}
+\RequirePackage{fancyhdr}
 \fancypagestyle{fancy}{%
     \fancyhead[LE,RO]{\thepage}
     \fancyhead[LO,RE]{\textsl{\leftmark}}
@@ -40,7 +40,118 @@
 
 %%%%%%%%%%%%%%%%%%%%%
 
+\usetikzlibrary{shapes.geometric,shadows,positioning}
+\tikzset{line cap=round,line join=round,circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
+\newcommand\chaptertitleformat[1]{%
+    \begin{tikzpicture}[
+        orbit/.pic={
+            \draw[line width=1pt,gray] (0,2) 
+                arc[start angle=90,delta angle=360,x radius=.85cm,y radius=2cm]
+                node[pos=.6,circle,fill=white,inner sep=0pt,minimum size=15pt] {}
+                node[pos=.6,circle,fill=gray,inner sep=0pt,minimum size=10pt] {}
+            ;
+        },
+        atom/.pic={\fill[##1] circle[radius=7.5pt];},
+        nuclear/.pic={
+            \pic{orbit};\pic[rotate=120] {orbit};\pic[rotate=-120] {orbit};
+            \foreach \i in {30,150,270}{ \pic at (\i:.45) {atom=gray};}
+            \foreach \i in {90,210,330}{ \pic at (\i:.45) {atom=cyan};}
+            \pic {atom=gray};
+        }
+    ]
+        \fill[rotate=45,gray!50] (1.75,0) 
+            arc[start angle=0,delta angle=360,x radius=1.75cm,y radius=.7cm]
+            node[circle,pos=.075,fill=white,inner sep=0pt,minimum size=15pt] {}
+            node[circle,pos=.075,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
+            node[circle,pos=.575,fill=white,inner sep=0pt,minimum size=15pt] {}
+            node[circle,pos=.575,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
+            ;
+        \fill (-1.5,1.5) -- ++(1,0) -- ++(2,-2) -- ++(0,-1) -- ++(-1,0) -- ++(-2,2) --cycle;
+        \path[every node/.style={font=\sffamily,text=white}] 
+              (0,0) node[font=\sffamily\Huge] {\thechapter}
+              (-.75,.75) node[scale=.9] {第}
+              (.75,-.75) node[scale=.9] {章};
+        \draw[thick] 
+        (2,-.75) node[circlewidget,anchor=west] {}
+        -- 
+        node[pos=.05,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\Huge,scale=1.25] {#1} 
+        % https://tex.stackexchange.com/a/761324
+        % https://tex.stackexchange.com/a/761357
+        pic[pos=.85,yshift=.75cm,scale=.75,transform shape] {nuclear}
+        ++(.75\textwidth,0) node[circlewidget,anchor=west] {}
+        ;
+    \end{tikzpicture}%
+}
+\newcommand\sectiontitleformat[1]{%
+    \begin{tikzpicture}[line join=round]
+    \node[
+        fill,rounded corners=.6cm,
+        font=\sffamily\Huge,text=white,
+        inner sep=5pt, 
+        minimum width=2.25cm, 
+        minimum height=1.35cm,
+        general shadow={fill=gray!25,shadow scale=1.15}
+    ] (sec) {\thesection};
+    \coordinate (start) at ([xshift=1.25cm,yshift=.25cm]sec.east);
+    \draw[ultra thick,gray!75] ([xshift=-.15cm]start) -- ++(.35,-.7);
+    \draw[ultra thick] (start) -- ++(.35,-.7) coordinate (tmp);
+    \draw[ultra thick,gray!75] (tmp) -- 
+    node[pos=.05,above=7.5pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,text=black,scale=1.25] {#1} 
+    ++(.75\textwidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
+    \draw[gray!25,ultra thick] ([yshift=.5cm]end.center) -- ++(-1cm,0);
+    \draw[gray!75,ultra thick] ([yshift=.7cm]end.center) -- ++(-1.75cm,0);
+    \draw[ultra thick] ([yshift=.9cm]end.center) -- ++(-2.5cm,0);
+    \end{tikzpicture}
+}
+\newcommand\subsectiontitleformat[1]{%
+    \begin{tikzpicture}[line join=round]
+    \node[fill=black!90,rounded corners,
+        font=\sffamily\Large,text=white,
+        inner sep=5pt, 
+    ] (subsec) {\thesubsection};
+    \draw[ultra thick] (subsec) -- node[pos=.05,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.925\textwidth,0) node[circlewidget,line width=.8pt] {};
+    \end{tikzpicture}
+}
+\ctexset{
+    chapter = {
+        name = {}, 
+        number = {},%这里不可用 numbering=false,将导致缺少\thechapter的定义
+        titleformat = \chaptertitleformat
+    },
+    section = {
+        name = {}, 
+        number = {},
+        titleformat = \sectiontitleformat
+    },
+    subsection = {
+        name = {}, 
+        number = {},
+        titleformat = \subsectiontitleformat
+    },
+}
 
+\newcounter{SectionPart}[chapter]
+% https://tex.stackexchange.com/a/761359/322482
+\newcommand\SectionPart[1]{%
+    \refstepcounter{SectionPart}%
+    \par\noindent\begin{tikzpicture}
+    \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2.25cm, minimum height=1.65cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
+    \node[right=1.5cm of ell,anchor=west,font=\sffamily\huge] {#1};
+    \coordinate (ellstart) at ([xshift=.75cm,yshift=.75cm]ell.east);
+    \coordinate (ellend) at ([xshift=.25cm,yshift=-.75cm]ell.east);
+    \path (ellstart) 
+        ++(.825\textwidth,0) coordinate (doublestart) 
+        ++(-.5,-1.5) coordinate (doubleend);
+    \scoped{
+        \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);% clip the double path
+        \draw[gray!75,thick,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
+    }
+    \draw[thick,gray!75] 
+        (ellstart) node[circlewidget,anchor=west] {} -- ([xshift=2pt]doublestart) % details not perrfect here ;-(
+        ([xshift=2pt]doubleend) -- (ellend) node[circlewidget,anchor=west] {}
+    ;
+    \end{tikzpicture}
+}
 
 
 \endinput
