@@ -1,8 +1,8 @@
-\documentclass[12pt,openany]{book}
-\usepackage{mypkg}
-\usepackage{libertine}
-\usepackage{lipsum}
+\documentclass[12pt,openany,fontset=fandol]{ctexbook}
+\usepackage[tt=false,osf]{libertine}
 \usepackage{geometry}
+\usepackage{lipsum}
+\usepackage{mypkg}
 
 \marginblockset{
     node-fill    = gray!50,
@@ -14,9 +14,23 @@
 
 \begin{document}
 
+\ExplSyntaxOn
+\seq_new:N \l_my_colors_seq
+\seq_set_from_clist:Nn \l_my_colors_seq { red!50, green!50, blue!50, yellow!50, cyan, teal, violet, magenta, orange, purple, pink, lime, brown, black  }
 \foreach \nn in {1,...,12} {
-    \chapter{Test Chapter \nn}
-    \lipsum[1]
+    \chapter{Test~Chapter~\nn}
+    \lipsum[\nn]\lipsum[\nn]
+    \begin{mybox}[colframe={\seq_rand_item:N \l_my_colors_seq}]{Theorem \nn}
+        \begin{enumerate}
+            \item First~item.
+            \item Second~item.
+            \item Third~item.
+            \item Fourth~item.
+        \end{enumerate}
+    \lipsum[\nn]
+    \end{mybox}
+    \lipsum[\nn]\lipsum[\nn]
 }
+\ExplSyntaxOff
 
 \end{document}

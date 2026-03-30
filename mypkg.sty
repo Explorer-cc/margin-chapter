@@ -1,27 +1,80 @@
 % mypkg.sty
 \ProvidesPackage{mypkg}[2026/03/27 My simple package]
 
+%%%%%%%%%% enumitem setup %%%%%%%%%%%%%
+\usepackage{enumitem}
+\newcommand*\squarednum[1]{\tikz[baseline=(char.base)]{\node[rectangle, draw, semithick, inner sep=0pt, minimum size = 1em, font=\sffamily] (char) {#1};}}
+\setlist[enumerate]{label=\protect\squarednum{\arabic*},nosep}
+
+%%%%%%%%%% plain tcolorbox setup %%%%%%%%%%%%
+\usepackage[many]{tcolorbox}
+% https://tex.stackexchange.com/a/747203
+\tikzset{mybox frame/.style={tcbcolframe, line width=1.5pt}}
+\tcbsubskin{mybox}{empty}{
+  frame engine=path,
+  attach boxed title to top left={xshift=.25cm,yshift=-.7\baselineskip},
+  boxed title style={
+    skin=empty,frame engine=path,
+    frame empty,
+  },
+  % frame code specific for unbroken boxes
+  frame code={
+    \draw[mybox frame]
+        (title.west) -| (frame.south west) -- (frame.south east) |- (title.east);
+  },
+  % frame code for broken boxes
+  skin first is subskin of={emptyfirst}{
+    frame code={
+      \draw[mybox frame]
+        (title.west) -| (frame.south west)
+        (frame.south east) |- (title.east);
+    }
+  },
+  skin middle is subskin of={emptymiddle}{
+    frame code={
+      \draw[mybox frame]
+          (frame.north east) -- (frame.south east)
+          (frame.north west) -- (frame.south west);
+    }
+  },
+  skin last is subskin of={emptylast}{
+    frame code={
+      \draw[mybox frame]
+          (frame.north east) -- (frame.south east)
+          -- (frame.south west) -- (frame.north west);
+    }
+  }
+}
+
+\NewTColorBox{mybox}{ O{} m }{
+  breakable, skin=mybox, top=.5cm,
+  before skip=.1cm,
+  after skip=.25cm,
+  before title={【},after title={】},
+% before title={[\,},after title={\,]},
+% colframe=green!75!black,
+  colframe=violet!85,
+  fonttitle=\bfseries\large,
+  title={#2},#1,
+  coltitle=tcbcolframe,% delay after #1
+}
+
+
 %%%%%%%%%%% margin chapter layout%%%%%%%%%%%%%%
 \RequirePackage{tikz}
 \usetikzlibrary{matrix}
 % https://tex.stackexchange.com/a/761258
-
 \ExplSyntaxOn
 \tl_new:N \l_mwe_matrix_content_tl
-
-% —— l3keys 样式变量 ——
-% 颜色
 \tl_new:N \l_mypkg_node_fill_color
 \tl_new:N \l_mypkg_current_fill_color
 \tl_new:N \l_mypkg_node_draw_color
 \tl_new:N \l_mypkg_current_draw_color
-% 尺寸
 \dim_new:N \l_mypkg_block_size_dim
 \dim_new:N \l_mypkg_block_sep_dim
-% 字体
 \tl_new:N \l_mypkg_font_style_tl
 
-% —— keys 定义 ——
+% keys
 \keys_define:nn { mypkg }
 {
     node-fill    .tl_set:N   = \l_mypkg_node_fill_color,
@@ -40,7 +93,7 @@
     font         .initial:n  = { \sffamily\bfseries\Huge },
 }
 
-% —— 用户接口 ——
+%
 \NewDocumentCommand \marginblockset { m } { 
     \keys_set:nn { mypkg } { #1 } 
 }
@@ -49,10 +102,10 @@
     \arabic{chapter}
 }
 \hook_gput_code:nnn { enddocument } { . } {
-  \property_record:nn { mwe/matrix } { last-chapter }
+  \property_record:nn { mypkg/matrix } { last-chapter }
 }
 \hook_gput_code:nnn { shipout/background } { . } {
-    \int_step_inline:nn { \property_ref:nn { mwe/matrix } { last-chapter } } {
+    \int_step_inline:nn { \property_ref:nn { mypkg/matrix } { last-chapter } } {
         \int_compare:nNnT { #1 } = { \value{chapter} } {
             \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=\l_mypkg_current_fill_color, draw=\l_mypkg_current_draw_color]| }
         }
