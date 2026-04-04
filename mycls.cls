@@ -26,7 +26,7 @@
         a4paper,
         hmargin=1.25cm,
         vmargin=1.75cm,
-        showframe,
+        % showframe,
     ]{geometry}
 
 
