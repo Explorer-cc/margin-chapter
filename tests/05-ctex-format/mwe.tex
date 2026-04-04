@@ -1,13 +1,13 @@
-\documentclass[fontset=fandol,twocolumn]{ctexbook}
+\documentclass[10pt,twocolumn,fontset=fandol]{ctexbook}
 \usepackage[
     a4paper,
-    hmargin=1.5cm,
-    vmargin=2.5cm,
+    hmargin=1cm,
+    vmargin=1.5cm,
     ]{geometry}
 \usepackage{zhlipsum}
 \usepackage{showframe}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric,shadows,positioning}
+\usetikzlibrary{calc,shapes.geometric,shadows,positioning}
 \tikzset{line cap=round,line join=round,circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
 \newcommand\chaptertitleformat[1]{%
     \begin{tikzpicture}[
@@ -41,11 +41,11 @@
         \draw[thick] 
         (2,-.75) node[circlewidget,anchor=west] {}
         -- 
-        node[pos=.01,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
+        node[pos=.1,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
         pic[pos=.85,yshift=.75cm,scale=.75,transform shape] {nuclear}
-        ++(.75\linewidth,0) node[circlewidget,anchor=west] {}
+        (.9\linewidth,-.75) node[circlewidget,anchor=west] {}
         ;
     \end{tikzpicture}%
 }
@@ -63,8 +63,8 @@
     \draw[ultra thick,gray!75] ([xshift=-.15cm]start) -- ++(.35,-.7);
     \draw[ultra thick] (start) -- ++(.35,-.7) coordinate (tmp);
     \draw[ultra thick,gray!75] (tmp) -- 
-    node[xshift=-.4cm,pos=.01,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
-    ++(.725\linewidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
+    node[xshift=-.4cm,pos=.1,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
+    ++(.75\columnwidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
     \draw[gray!25,ultra thick] ([yshift=.4cm]end.center) -- ++(-1cm,0);
     \draw[gray!75,ultra thick] ([yshift=.6cm]end.center) -- ++(-1.75cm,0);
     \draw[ultra thick] ([yshift=.8cm]end.center) -- ++(-2.5cm,0);
@@ -76,7 +76,9 @@
         font=\sffamily\Large,text=white,
         inner sep=5pt, 
     ] (subsec) {\thesubsection};
-    \draw[ultra thick] (subsec) -- node[draw,pos=.05,anchor=west,font=\sffamily\large] {#1} ++(.9\linewidth,0) node[circlewidget,line width=.8pt] {};
+    \draw[ultra thick] (subsec) 
+    -- node[fill=white,pos=.05,anchor=west,font=\sffamily\large] {#1} 
+    ++(.9\columnwidth,0) node[circlewidget,line width=.8pt] {};
     \end{tikzpicture}
 }
 \ctexset{
@@ -88,12 +90,14 @@
     section = {
         name = {}, 
         number = {},
+        aftername = {},
         format = \sectiontitleformat
     },
     subsection = {
-        name = {}, 
+        name = {},
         number = {},
-        format = \subsectiontitleformat
+        aftername = {},
+        format = \subsectiontitleformat,
     },
 }
 
@@ -123,7 +127,7 @@
 \begin{document}
 
 \chapter{AAAAAAAAA}
-\SectionPart{Just 一个测试 test}
+\SectionPart{Just测试test}
 \section{aaaabbbbbppppp}
 \zhlipsum[1]
 
@@ -143,12 +147,6 @@
 
 \subsection{Hello World}
 \zhlipsum[3]
-
-\texttt{\the\linewidth}
-
-\texttt{\the\textwidth}
-
-\texttt{\the\paperwidth}
 
 
 
