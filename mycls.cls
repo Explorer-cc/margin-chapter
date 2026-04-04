@@ -1,7 +1,9 @@
 % mycls.cls
 \ProvidesClass{mycls}[2026/03/27 My simple class]
 
-\LoadClass{book}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{book}}
+\ProcessOptions\relax
+\LoadClass[10pt]{book} %<- fixed 10pt always okay here?
 \RequirePackage[fontset=fandol,heading=true]{ctex}
 
 %%%%%%%%%
@@ -9,7 +11,6 @@
 %%%%%%%%%
 
 %%%%%%%%%%%%%%%
-
 \RequirePackage{multicol}
 \setlength{\columnsep}{20pt}
 \setlength{\columnseprule}{.4pt}
@@ -18,12 +19,13 @@
 \AddToHook{cmd/@chapter/after}{\begin{multicols}{2}}
 \AddToHook{cmd/@schapter/after}{\begin{multicols}{2}}
 \AtEndDocument{\ifnum\col@number>1\end{multicols}\fi}
+%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%
 \RequirePackage[
         a4paper,
-        hmargin=1.75cm,
-        vmargin=2.5cm,
+        hmargin=1.25cm,
+        vmargin=1.75cm,
         showframe,
     ]{geometry}
 
@@ -35,13 +37,16 @@
     % \renewcommand{\headrulewidth}{0.4pt} 
     % \renewcommand{\footrulewidth}{2pt}
 }
-\fancypagestyle{plain}[fancy]{} % set plain in \chapter style as faccy, to show the header
+\fancypagestyle{plain}[fancy]{} % set plain in \chapter style the same as fancy, to show the header
 \pagestyle{fancy}
 
 %%%%%%%%%%%%%%%%%%%%%
 
-\usetikzlibrary{shapes.geometric,shadows,positioning}
-\tikzset{line cap=round,line join=round,circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
+\usetikzlibrary{arrows.meta,shapes.geometric,shadows,positioning}
+\tikzset{
+    line cap=round,line join=round,
+    >={Circle[open,black,fill=gray!75,length=5pt]},% use circle tip to simplified the code
+}
 \newcommand\chaptertitleformat[1]{%
     \begin{tikzpicture}[
         orbit/.pic={
@@ -71,14 +76,15 @@
               (0,0) node {\thechapter}
               (-.75,.75) node[scale=.8] {第}
               (.75,-.75) node[scale=.8] {章};
-        \draw[thick] 
-        (2,-.75) node[circlewidget,anchor=west] {}
+        \draw[thick,<->] 
+        (2,-.75)
         -- 
         node[pos=.01,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
-        pic[pos=.85,yshift=.75cm,scale=.75,transform shape] {nuclear}
-        ++(.75\linewidth,0) node[circlewidget,anchor=west] {}
+        pic[pos=.85,yshift=.75cm,scale=.75,transform shape,-] {nuclear}
+        % the `-' here is to remove the arrow tip of path which affect the pic
+        ++(.75\linewidth,0)
         ;
     \end{tikzpicture}%
 }
@@ -95,12 +101,12 @@
     \coordinate (start) at ([xshift=.35cm,yshift=.35cm]sec.east);
     \draw[ultra thick,gray!75] ([xshift=-.15cm]start) -- ++(.35,-.7);
     \draw[ultra thick] (start) -- ++(.35,-.7) coordinate (tmp);
-    \draw[ultra thick,gray!75] (tmp) -- 
-    node[xshift=-.4cm,pos=.01,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
-    ++(.725\linewidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
-    \draw[gray!25,ultra thick] ([yshift=.4cm]end.center) -- ++(-1cm,0);
-    \draw[gray!75,ultra thick] ([yshift=.6cm]end.center) -- ++(-1.75cm,0);
-    \draw[ultra thick] ([yshift=.8cm]end.center) -- ++(-2.5cm,0);
+    \draw[ultra thick,gray!75,->] (tmp) -- 
+    node[xshift=-.4cm,pos=.1,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
+    ++(.725\linewidth,0) coordinate (end);
+    \draw[gray!25,ultra thick] ([yshift=.4cm]end) -- ++(-1cm,0);
+    \draw[gray!75,ultra thick] ([yshift=.6cm]end) -- ++(-1.75cm,0);
+    \draw[ultra thick] ([yshift=.8cm]end) -- ++(-2.5cm,0);
     \end{tikzpicture}
 }
 \newcommand\subsectiontitleformat[1]{%
@@ -109,22 +115,27 @@
         font=\sffamily\Large,text=white,
         inner sep=5pt, 
     ] (subsec) {\thesubsection};
-    \draw[ultra thick] (subsec) -- node[draw,pos=.05,anchor=west,font=\sffamily\large] {#1} ++(.9\linewidth,0) node[circlewidget,line width=.8pt] {};
+    \draw[ultra thick,->] (subsec) -- node[pos=.1,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.9\linewidth,0);
     \end{tikzpicture}
 }
 \ctexset{
     chapter = {
+        fixskip = true,
+        beforeskip = 2ex,
+        afterskip = 2ex,
         name = {}, 
         number = {},%这里不可用 numbering=false,将导致缺少\thechapter的定义
         format = \centering\chaptertitleformat
     },
     section = {
         name = {}, 
+        aftername = {},
         number = {},
         format = \centering\sectiontitleformat
     },
     subsection = {
         name = {}, 
+        aftername = {},
         number = {},
         format = \centering\subsectiontitleformat
     },
@@ -134,7 +145,8 @@
 % https://tex.stackexchange.com/a/761359/322482
 \newcommand\SectionPart[1]{%
     \refstepcounter{SectionPart}%
-    \par\noindent\begin{tikzpicture}
+    \par\noindent
+    \begin{tikzpicture}
     \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2cm, minimum height=1.25cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
     \node[right=.75cm of ell,anchor=west,font=\sffamily\huge] {#1};
     \coordinate (ellstart) at ([xshift=.5cm,yshift=.75cm]ell.east);
@@ -146,10 +158,8 @@
         \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);% clip the double path
         \draw[gray!75,line width=1pt,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
     }
-    \draw[line width=1pt,gray!75] 
-        (ellstart) node[circlewidget,anchor=west] {} -- ([xshift=2pt]doublestart) % details not perfect here ;-(
-        ([xshift=2pt]doubleend) -- (ellend) node[circlewidget,anchor=west] {}
-    ;
+    \draw[line width=1pt,gray!75,<-] (ellstart) -- ([xshift=2pt]doublestart);
+    \draw[line width=1pt,gray!75,->] ([xshift=2pt]doubleend) -- (ellend);
     \end{tikzpicture}
 }
 

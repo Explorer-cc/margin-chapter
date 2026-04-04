@@ -41,14 +41,12 @@
               (0,0) node {\thechapter}
               (-.75,.75) node[scale=.8] {第}
               (.75,-.75) node[scale=.8] {章};
-        \draw[thick,<->] 
-        (2,-.75)
-        -- 
+        \draw[thick,<->] (2,-.75) -- 
         node[pos=.1,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
         pic[pos=.85,yshift=.75cm,scale=.75,transform shape,-] {nuclear}
-        % the `-' here is to elliminate the arrow tip of path that affect the pic
+        % the `-' here is to remove the arrow tip of path which affect the pic
         (.9\linewidth,-.75)
         ;
     \end{tikzpicture}%
@@ -93,14 +91,14 @@
     },
     section = {
         name = {}, 
-        number = {},
         aftername = {},
+        number = {},
         format = \sectiontitleformat
     },
     subsection = {
         name = {},
-        number = {},
         aftername = {},
+        number = {},
         format = \subsectiontitleformat,
     },
 }

@@ -1,10 +1,12 @@
 - [ ] 代码整体风格一致性
 - [ ] 当前代码在正文没有 `\chapter`的时候会报神秘错误，综合考虑宏包与文档类的设置，增加关闭marginblock功能的选项，并做好警告提示
-- [ ] 修复一下目前的 twocolumn模式存在的中线问题
-- [ ] 处理目前的ctex-heading设计与twocolumn的问题
+- [X] 修复一下目前的 twocolumn模式存在的中线问题
+- [X] 处理目前的ctex-heading设计与twocolumn的问题
 - [ ] `ctex-format` + `leftmark`的同步绑定问题
+- [ ] 调整整体页面尺寸以适应更多文本
 - [X] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
 - [X] 双栏布局
+- [X] 修改标题装饰中「圆形装饰」的实现，从笨拙的node方案转为Circle方案
 - [X] 基于 `ctex`的 `format`方法的标题样式设计
   - [X] `chapter`
   - [X] `section`
