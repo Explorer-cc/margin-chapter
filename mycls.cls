@@ -80,7 +80,7 @@
         node[pos=.05,above=7pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.15] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
-        pic[pos=.875,yshift=.5cm,scale=.75,transform shape,-] {nuclear}
+        pic[pos=.875,yshift=.7cm,scale=.75,transform shape,-] {nuclear}
         % the `-' here is to remove the arrow tip of path which affect the pic
         ++(.775\linewidth,0)
         ;
@@ -92,7 +92,7 @@
         fill,rounded corners=.3cm,
         font=\sffamily\Large,text=white,
         inner sep=5pt, 
-        minimum width=1.5cm, 
+        minimum width=1cm, 
         minimum height=.75cm,
         general shadow={fill=gray!25,shadow scale=1.15}
     ] (sec) {\thesection};
@@ -150,10 +150,10 @@
 % https://tex.stackexchange.com/a/761359/322482
 \newcommand\SectionPart[1]{%
     \refstepcounter{SectionPart}%
-    \par\noindent
-    \begin{tikzpicture}
-    \node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=2cm, minimum height=1.25cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
-    \node[right=.75cm of ell,anchor=west,font=\sffamily\huge] {#1};
+    \par\noindent%
+    \begin{tikzpicture}%
+\node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=1.75cm, minimum height=1.25cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
+    \node[right=.5cm of ell,anchor=west,font=\sffamily\huge] {#1};
     \coordinate (ellstart) at ([xshift=.5cm,yshift=.75cm]ell.east);
     \coordinate (ellend) at ([xshift=.1cm,yshift=-.75cm]ell.east);
     \path (ellstart) 
