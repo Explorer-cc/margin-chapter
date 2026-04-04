@@ -21,7 +21,7 @@
 \AtEndDocument{\ifnum\col@number>1\end{multicols}\fi}
 %%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%
 \RequirePackage[
         a4paper,
         hmargin=1.25cm,
@@ -64,27 +64,25 @@
             \pic {atom=gray};
         }
     ]
-        \fill[rotate=45,gray!50] (1.75,0) 
-            arc[start angle=0,delta angle=360,x radius=1.75cm,y radius=.7cm]
+        \fill[rotate=45,gray!25] (1.75,0) 
+            arc[start angle=0,delta angle=360,x radius=1.75cm,y radius=.85cm]
             node[circle,pos=.075,fill=white,inner sep=0pt,minimum size=15pt] {}
-            node[circle,pos=.075,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
+            node[circle,pos=.075,fill=gray,inner sep=0pt,minimum size=10pt] {}
             node[circle,pos=.575,fill=white,inner sep=0pt,minimum size=15pt] {}
-            node[circle,pos=.575,fill=gray!50,inner sep=0pt,minimum size=10pt] {}
+            node[circle,pos=.575,fill=gray,inner sep=0pt,minimum size=10pt] {}
             ;
         \fill (-1.5,1.5) -- ++(1,0) -- ++(2,-2) -- ++(0,-1) -- ++(-1,0) -- ++(-2,2) --cycle;
         \path[every node/.style={font=\sffamily\huge,text=white}] 
               (0,0) node {\thechapter}
-              (-.75,.75) node[scale=.8] {第}
-              (.75,-.75) node[scale=.8] {章};
-        \draw[thick,<->] 
-        (2,-.75)
-        -- 
-        node[pos=.01,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
+              (-.75,.75) node[scale=.9] {第}
+              (.75,-.75) node[scale=.9] {章};
+        \draw[thick,<->] (2,-.75) -- 
+        node[pos=.05,above=7pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.15] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
-        pic[pos=.85,yshift=.75cm,scale=.75,transform shape,-] {nuclear}
+        pic[pos=.875,yshift=.5cm,scale=.75,transform shape,-] {nuclear}
         % the `-' here is to remove the arrow tip of path which affect the pic
-        ++(.75\linewidth,0)
+        ++(.775\linewidth,0)
         ;
     \end{tikzpicture}%
 }
@@ -123,21 +121,28 @@
         fixskip = true,
         beforeskip = 2ex,
         afterskip = 2ex,
-        name = {}, 
+        name = {},
+        aftername = {},
         number = {},%这里不可用 numbering=false,将导致缺少\thechapter的定义
-        format = \centering\chaptertitleformat
+        format = \centering\chaptertitleformat,
     },
     section = {
-        name = {}, 
+        fixskip = true,
+        beforeskip = 1ex,
+        afterskip = 1ex,
+        name = {},
         aftername = {},
         number = {},
-        format = \centering\sectiontitleformat
+        format = \centering\sectiontitleformat,
     },
     subsection = {
+        fixskip = true,
+        beforeskip = 1ex,
+        afterskip = 1ex,
         name = {}, 
         aftername = {},
         number = {},
-        format = \centering\subsectiontitleformat
+        format = \centering\subsectiontitleformat,
     },
 }
 

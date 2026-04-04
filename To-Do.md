@@ -5,7 +5,7 @@
 - [ ] `ctex-format` + `leftmark`的同步绑定问题
 - [ ] 调整整体页面尺寸以适应更多文本
 - [X] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
-- [X] 双栏布局
+- [ ] 双栏布局细节处理：原版为unbalanced，现版本基于multicols的hook，会自动实现balance
 - [X] 修改标题装饰中「圆形装饰」的实现，从笨拙的node方案转为Circle方案
 - [X] 基于 `ctex`的 `format`方法的标题样式设计
   - [X] `chapter`

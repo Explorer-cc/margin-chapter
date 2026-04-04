@@ -1,6 +1,21 @@
 \documentclass[10pt]{mycls}
 \usepackage{zhlipsum}
 
+\usepackage{newpx}
+\usepackage{amsmath,amsfonts}
+\usepackage{fixdif}
+
+% \makeatletter
+% \AtBeginDocument{
+%     \g@addto@macro\normalsize{%
+%         \setlength\abovedisplayskip{2pt plus 2pt minus 1pt}%
+%         \setlength\belowdisplayskip{2pt plus 2pt minus 1pt}%
+%         \setlength\abovedisplayshortskip{2pt plus 2pt}%
+%         \setlength\belowdisplayshortskip{2pt plus 2pt minus 1pt}%
+%     }
+% }
+% \makeatother
+
 \marginblockset{
     node-fill    = gray!50,
     current-fill = gray,
@@ -9,12 +24,11 @@
     font         = \sffamily\bfseries\huge,
 }
 
-
 \begin{document}
 
 \chapter{你好}
     你好
-    \zhlipsum[1]
+    \zhlipsum*[1]
     \begin{mybox}[colframe=cyan]{Euler欧拉 Theorem}
         \begin{enumerate}
             \item First~item.
@@ -22,37 +36,59 @@
             \item Third~item.
             \item Fourth~item.
         \end{enumerate}
-        \zhlipsum[3]
+        \zhlipsum*[3]
     \end{mybox}
-    \zhlipsum[2]
+    \zhlipsum*[1-3]
+    
 %%%%%%%%%%%%%%%%%%%%%
 \chapter{AAAAAAAAA}
 \SectionPart{一个测试 test}
 \section{aaaabbbbbppppp}
-\zhlipsum[1]
+\zhlipsum*[1]
 
 \subsection{AAA你好啊啊啊BBB}
+\zhlipsum*[1]
+
+\zhlipsum*[3]
+
+\subsection{AAA你好啊啊啊BBB}
+
+\zhlipsum*[1]
+
+\[ 
+\lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{k} \iint
+\left( \frac{\partial^{2} f(x,y)}{\partial x \partial y} \right) \d x \, \d y 
+= \det \begin{pmatrix} a & b \\ c & d \end{pmatrix} 
+\cdot \operatorname{Tr} \left( \mathbf{A} \otimes \mathbf{B} \right)
+\]
+
 \zhlipsum[2]
+\begin{align}
+\int_{0}^{1} x^{2} \, \d x 
+&= \left[ \frac{x^{3}}{3} \right]_{0}^{1} \\
+&= \frac{1}{3} - 0 \\
+&= \frac{1}{3}
+\end{align}
 
-\subsection{AAA你好啊啊啊BBB}
-\zhlipsum[3]
+\zhlipsum*[name=zhufu]
+
 
 \chapter{我的世界你好你好}
 \SectionPart{测试测试测试}
 \section{aaaabbbbbppppp}
-\zhlipsum[1]
+\zhlipsum*[1]
 
 \subsection{AAA你好啊啊啊BBB}
-\zhlipsum[2]
+\zhlipsum*[2]
 
 \subsection{AAA你好啊啊啊BBB}
-\zhlipsum[3]
+\zhlipsum*[1-3]
+
 %%%%%%%%%%%%%%%%%%%%%%%
-
 
 \chapter{你好}
 你好
-\zhlipsum[1]
+\zhlipsum*[1]
 \begin{mybox}[colframe=cyan]{Euler欧拉 Theorem}
     \begin{enumerate}
         \item First~item.
@@ -60,13 +96,30 @@
         \item Third~item.
         \item Fourth~item.
     \end{enumerate}
-    \zhlipsum[3]
+    \zhlipsum*[3]
 \end{mybox}
-\zhlipsum[1-3]
+
+\[ 
+\lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{k} \iint
+\left( \frac{\partial^{2} f(x,y)}{\partial x \partial y} \right) \d x \, \d y 
+= \det \begin{pmatrix} a & b \\ c & d \end{pmatrix} 
+\cdot \operatorname{Tr} \left( \mathbf{A} \otimes \mathbf{B} \right)
+\]
+
+\zhlipsum*[1]
+\begin{align}
+\int_{0}^{1} x^{2} \, \d x 
+&= \left[ \frac{x^{3}}{3} \right]_{0}^{1} \\
+&= \frac{1}{3} - 0 \\
+&= \frac{1}{3}
+\end{align}
+
+\zhlipsum*[name=zhufu]
+
 
 \chapter{你好}
 你好
-\zhlipsum[1]
+\zhlipsum*[1]
 \begin{mybox}[colframe=cyan]{Euler欧拉Theorem}
     \begin{enumerate}
         \item First~item.
@@ -74,9 +127,25 @@
         \item Third~item.
         \item Fourth~item.
     \end{enumerate}
-    \zhlipsum[3]
+    \zhlipsum*[3]
 \end{mybox}
-\zhlipsum[1-3]
+
+\[ 
+\lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{k} \iint
+\left( \frac{\partial^{2} f(x,y)}{\partial x \partial y} \right) \d x \, \d y 
+= \det \begin{pmatrix} a & b \\ c & d \end{pmatrix} 
+\cdot \operatorname{Tr} \left( \mathbf{A} \otimes \mathbf{B} \right)
+\]
+
+\zhlipsum*[1]
+\begin{align}
+\int_{0}^{1} x^{2} \, \d x 
+&= \left[ \frac{x^{3}}{3} \right]_{0}^{1} \\
+&= \frac{1}{3} - 0 \\
+&= \frac{1}{3}
+\end{align}
+
+\zhlipsum*[name=zhufu]
 
 
 \end{document}
