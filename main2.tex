@@ -5,16 +5,15 @@
 \usepackage{amsmath,amsfonts}
 \usepackage{fixdif}
 
-% \makeatletter
-% \AtBeginDocument{
-%     \g@addto@macro\normalsize{%
-%         \setlength\abovedisplayskip{2pt plus 2pt minus 1pt}%
-%         \setlength\belowdisplayskip{2pt plus 2pt minus 1pt}%
-%         \setlength\abovedisplayshortskip{2pt plus 2pt}%
-%         \setlength\belowdisplayshortskip{2pt plus 2pt minus 1pt}%
-%     }
-% }
-% \makeatother
+\usepackage{etoolbox}%
+\makeatletter
+\g@addto@macro\normalsize{%
+    \setlength\abovedisplayskip{5pt plus 2pt minus 1pt}%
+    \setlength\belowdisplayskip{5pt plus 2pt minus 1pt}%
+    \setlength\abovedisplayshortskip{5pt plus 2pt}%
+    \setlength\belowdisplayshortskip{5pt plus 2pt minus 1pt}%
+}
+\makeatother
 
 \marginblockset{
     node-fill    = gray!50,

@@ -29,6 +29,7 @@
         showframe,
     ]{geometry}
 
+
 \RequirePackage{fancyhdr}
 \fancypagestyle{fancy}{%
     \fancyhead[LE,RO]{\thepage}
@@ -41,6 +42,8 @@
 \pagestyle{fancy}
 
 %%%%%%%%%%%%%%%%%%%%%
+% fix leftmark
+\renewcommand\chaptermark[1]{\markboth{第 \textup{\arabic{chapter}}\ 章 \quad #1}{}}
 
 \usetikzlibrary{arrows.meta,shapes.geometric,shadows,positioning}
 \tikzset{
@@ -113,7 +116,7 @@
         font=\sffamily\large,text=white,
         inner sep=5pt, 
     ] (subsec) {\thesubsection};
-    \draw[ultra thick,->] (subsec) -- node[pos=.1,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.95\linewidth,0);
+    \draw[ultra thick,->] (subsec) -- node[pos=.1,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.925\linewidth,0);
     \end{tikzpicture}
 }
 \ctexset{

@@ -1,11 +1,12 @@
 - [ ] 代码整体风格一致性
 - [ ] 当前代码在正文没有 `\chapter` 的时候会报神秘错误，综合考虑宏包与文档类的设置，增加关闭marginblock功能的选项，并做好警告提示
-- [ ] 调整chapter/section/subsection样式使其严格左对齐（参考结合慕子issues中的方案）
+- [X] 调整chapter/section/subsection样式使其严格左对齐（参考结合慕子issues中的方案）
+- [ ] 在不同字号以及不同长度的编号下章节样式右侧对齐位点保持一致不超限
 - [X] 修复目前的 twocolumn 模式存在的中线问题
 - [X] 处理目前的ctex-heading设计与twocolumn的问题
-- [ ] `ctex-format` + `leftmark`的同步绑定问题
-- [ ] 调整数学公式前后间距以匹配整体样式风格
-- [ ] 调整整体页面尺寸以适应更多文本
+- [X] `ctex-format` + `leftmark`的同步绑定问题
+- [X] 调整数学公式前后间距以匹配整体样式风格
+- [X] 调整整体页面尺寸以适应更多文本
 - [X] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
 - [ ] 双栏布局细节处理：原版为unbalanced，现版本基于multicols的hook，会自动实现balance （但是是否是必要的呢....?）
 - [X] 修改标题装饰中「圆形装饰」的实现，从笨拙的node方案转为Circle方案
