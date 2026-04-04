@@ -90,30 +90,30 @@
     \begin{tikzpicture}[line join=round]
     \node[
         fill,rounded corners=.3cm,
-        font=\sffamily\Large,text=white,
+        font=\sffamily\large,text=white,
         inner sep=5pt, 
         minimum width=1cm, 
         minimum height=.75cm,
-        general shadow={fill=gray!25,shadow scale=1.15}
+        general shadow={fill=gray!25,shadow scale=1.1}
     ] (sec) {\thesection};
     \coordinate (start) at ([xshift=.35cm,yshift=.35cm]sec.east);
     \draw[ultra thick,gray!75] ([xshift=-.15cm]start) -- ++(.35,-.7);
     \draw[ultra thick] (start) -- ++(.35,-.7) coordinate (tmp);
     \draw[ultra thick,gray!75,->] (tmp) -- 
     node[xshift=-.4cm,pos=.1,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
-    ++(.725\linewidth,0) coordinate (end);
-    \draw[gray!25,ultra thick] ([yshift=.4cm]end) -- ++(-1cm,0);
-    \draw[gray!75,ultra thick] ([yshift=.6cm]end) -- ++(-1.75cm,0);
-    \draw[ultra thick] ([yshift=.8cm]end) -- ++(-2.5cm,0);
+    ++(.82\linewidth,0) coordinate (end);
+    \draw[gray!25,thick] ([yshift=.4cm]end) -- ++(-1cm,0);
+    \draw[gray!75,thick] ([yshift=.55cm]end) -- ++(-1.75cm,0);
+    \draw[thick] ([yshift=.7cm]end) -- ++(-2.5cm,0);
     \end{tikzpicture}
 }
 \newcommand\subsectiontitleformat[1]{%
     \begin{tikzpicture}[line join=round]
     \node[fill=black!90,rounded corners,
-        font=\sffamily\Large,text=white,
+        font=\sffamily\large,text=white,
         inner sep=5pt, 
     ] (subsec) {\thesubsection};
-    \draw[ultra thick,->] (subsec) -- node[pos=.1,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.9\linewidth,0);
+    \draw[ultra thick,->] (subsec) -- node[pos=.1,anchor=west,fill=white,font=\sffamily\large] {#1} ++(.95\linewidth,0);
     \end{tikzpicture}
 }
 \ctexset{
@@ -122,27 +122,27 @@
         beforeskip = 2ex,
         afterskip = 2ex,
         name = {},
-        aftername = {},
+        aftername = {},%去掉其后的\quad
         number = {},%这里不可用 numbering=false,将导致缺少\thechapter的定义
         format = \centering\chaptertitleformat,
     },
     section = {
         fixskip = true,
-        beforeskip = 2ex,
-        afterskip = 2ex,
+        beforeskip = 1.5ex,
+        afterskip = 1.5ex,
         name = {},
         aftername = {},
         number = {},
-        format = \centering\sectiontitleformat,
+        format = \sectiontitleformat,
     },
     subsection = {
         fixskip = true,
-        beforeskip = 2ex,
-        afterskip = 2ex,
+        beforeskip = 1.5ex,
+        afterskip = 1.5ex,
         name = {}, 
         aftername = {},
         number = {},
-        format = \centering\subsectiontitleformat,
+        format = \subsectiontitleformat,
     },
 }
 
@@ -152,16 +152,16 @@
     \refstepcounter{SectionPart}%
     \par\noindent%
     \begin{tikzpicture}%
-\node[shape=ellipse,fill=gray!75,font=\sffamily\huge,text=white,inner sep=5pt, minimum width=1.75cm, minimum height=1.25cm, circular glow={fill=gray!50,shadow scale=1.15}] at (-1,0) (ell) {\S\;\theSectionPart};
-    \node[right=.5cm of ell,anchor=west,font=\sffamily\huge] {#1};
-    \coordinate (ellstart) at ([xshift=.5cm,yshift=.75cm]ell.east);
-    \coordinate (ellend) at ([xshift=.1cm,yshift=-.75cm]ell.east);
+    \node[shape=ellipse,fill=gray!75,font=\sffamily\large,text=white,inner sep=3pt, minimum width=1.25cm, minimum height=.8cm, circular glow={fill=gray!50,shadow scale=1.1}] at (-1,0) (ell) {\S\;\theSectionPart};
+    \node[right=.5cm of ell,anchor=west,font=\sffamily\Large] {#1};
+    \coordinate (ellstart) at ([xshift=.5cm,yshift=.5cm]ell.east);
+    \coordinate (ellend) at ([xshift=.1cm,yshift=-.5cm]ell.east);
     \path (ellstart) 
-        ++(.7\linewidth,0) coordinate (doublestart) 
-        ++(-.5,-1.5) coordinate (doubleend);
+        ++(.8\linewidth,0) coordinate (doublestart) 
+        ++(-.5,-1) coordinate (doubleend);
     \scoped{
         \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);% clip the double path
-        \draw[gray!75,line width=1pt,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
+        \draw[gray!75,line width=1pt,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.15,-.75) and ++(-.2,.75) .. (doubleend);
     }
     \draw[line width=1pt,gray!75,<-] (ellstart) -- ([xshift=2pt]doublestart);
     \draw[line width=1pt,gray!75,->] ([xshift=2pt]doubleend) -- (ellend);
