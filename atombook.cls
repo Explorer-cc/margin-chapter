@@ -7,7 +7,7 @@
 \RequirePackage[fontset=fandol,heading=true]{ctex}
 
 %%%%%%%%%
-\RequirePackage{mypkg}
+\RequirePackage{atombook}
 %%%%%%%%%
 
 %%%%%%%%%%%%%%%

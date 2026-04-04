@@ -1,5 +1,5 @@
-% mypkg.sty
-\ProvidesPackage{mypkg}[2026/03/27 My simple package]
+% atombook.sty
+\ProvidesPackage{atombook}[2026/03/27 My simple package]
 
 %%%%%%%%%% enumitem setup %%%%%%%%%%%%%
 \usepackage{enumitem}
@@ -66,50 +66,50 @@
 % https://tex.stackexchange.com/a/761258
 \ExplSyntaxOn
 \tl_new:N \l_mwe_matrix_content_tl
-\tl_new:N \l_mypkg_node_fill_color
-\tl_new:N \l_mypkg_current_fill_color
-\tl_new:N \l_mypkg_node_draw_color
-\tl_new:N \l_mypkg_current_draw_color
-\dim_new:N \l_mypkg_block_size_dim
-\dim_new:N \l_mypkg_block_sep_dim
-\tl_new:N \l_mypkg_font_style_tl
+\tl_new:N \l_atombook_node_fill_color
+\tl_new:N \l_atombook_current_fill_color
+\tl_new:N \l_atombook_node_draw_color
+\tl_new:N \l_atombook_current_draw_color
+\dim_new:N \l_atombook_block_size_dim
+\dim_new:N \l_atombook_block_sep_dim
+\tl_new:N \l_atombook_font_style_tl
 
 % keys
-\keys_define:nn { mypkg }
+\keys_define:nn { atombook }
 {
-    node-fill    .tl_set:N   = \l_mypkg_node_fill_color,
+    node-fill    .tl_set:N   = \l_atombook_node_fill_color,
     node-fill    .initial:n  = cyan,
-    current-fill .tl_set:N   = \l_mypkg_current_fill_color,
+    current-fill .tl_set:N   = \l_atombook_current_fill_color,
     current-fill .initial:n  = magenta,
-    node-draw    .tl_set:N   = \l_mypkg_node_draw_color,
+    node-draw    .tl_set:N   = \l_atombook_node_draw_color,
     node-draw    .initial:n  = none,
-    current-draw .tl_set:N   = \l_mypkg_current_draw_color,
+    current-draw .tl_set:N   = \l_atombook_current_draw_color,
     current-draw .initial:n  = none,
-    block-size   .dim_set:N  = \l_mypkg_block_size_dim,
+    block-size   .dim_set:N  = \l_atombook_block_size_dim,
     block-size   .initial:n  = 1.2cm,
-    block-sep    .dim_set:N  = \l_mypkg_block_sep_dim,
+    block-sep    .dim_set:N  = \l_atombook_block_sep_dim,
     block-sep    .initial:n  = 0.5cm,
-    font         .tl_set:N   = \l_mypkg_font_style_tl,
+    font         .tl_set:N   = \l_atombook_font_style_tl,
     font         .initial:n  = { \sffamily\bfseries\Huge },
 }
 
 %
 \NewDocumentCommand \marginblockset { m } { 
-    \keys_set:nn { mypkg } { #1 } 
+    \keys_set:nn { atombook } { #1 } 
 }
 
 \property_new:nnnn { last-chapter } { now } { 1 } {
     \arabic{chapter}
 }
 \hook_gput_code:nnn { enddocument } { . } {
-  \property_record:nn { mypkg/matrix } { last-chapter }
+  \property_record:nn { atombook/matrix } { last-chapter }
 }
 \hook_gput_code:nnn { shipout/background } { . } {
-    \int_compare:nNnF{ \property_ref:nn { mypkg/matrix } { last-chapter } } = {0} % add test for no chapter
+    \int_compare:nNnF{ \property_ref:nn { atombook/matrix } { last-chapter } } = {0} % add test for no chapter
     {%
-        \int_step_inline:nn { \property_ref:nn { mypkg/matrix } { last-chapter } } {
+        \int_step_inline:nn { \property_ref:nn { atombook/matrix } { last-chapter } } {
             \int_compare:nNnT { #1 } = { \value{chapter} } {
-                \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=\l_mypkg_current_fill_color, draw=\l_mypkg_current_draw_color]| }
+                \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=\l_atombook_current_fill_color, draw=\l_atombook_current_draw_color]| }
             }
             \tl_put_right:Nn \l_mwe_matrix_content_tl { #1 \\ }
         }
@@ -119,12 +119,12 @@
                     matrix~of~nodes,
                     nodes={
                         align=center,
-                        draw=\l_mypkg_node_draw_color,
-                        fill=\l_mypkg_node_fill_color, 
-                        minimum~size=\l_mypkg_block_size_dim,
-                        font=\l_mypkg_font_style_tl
+                        draw=\l_atombook_node_draw_color,
+                        fill=\l_atombook_node_fill_color, 
+                        minimum~size=\l_atombook_block_size_dim,
+                        font=\l_atombook_font_style_tl
                     },
-                    row~sep=\l_mypkg_block_sep_dim,
+                    row~sep=\l_atombook_block_sep_dim,
                     column~sep=0mm,
                     inner~sep=0pt,
                     outer~sep=0pt,
