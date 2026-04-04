@@ -128,8 +128,8 @@
     },
     section = {
         fixskip = true,
-        beforeskip = 1ex,
-        afterskip = 1ex,
+        beforeskip = 2ex,
+        afterskip = 2ex,
         name = {},
         aftername = {},
         number = {},
@@ -137,8 +137,8 @@
     },
     subsection = {
         fixskip = true,
-        beforeskip = 1ex,
-        afterskip = 1ex,
+        beforeskip = 2ex,
+        afterskip = 2ex,
         name = {}, 
         aftername = {},
         number = {},
