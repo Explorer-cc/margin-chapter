@@ -105,39 +105,43 @@
   \property_record:nn { mypkg/matrix } { last-chapter }
 }
 \hook_gput_code:nnn { shipout/background } { . } {
-    \int_step_inline:nn { \property_ref:nn { mypkg/matrix } { last-chapter } } {
-        \int_compare:nNnT { #1 } = { \value{chapter} } {
-            \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=\l_mypkg_current_fill_color, draw=\l_mypkg_current_draw_color]| }
-        }
-        \tl_put_right:Nn \l_mwe_matrix_content_tl { #1 \\ }
-    }
-    \begin{tikzpicture}[%
-            overlay,remember~picture,
-            marginpage/.style={
-                matrix~of~nodes,
-                nodes={
-                    align=center,
-                    draw=\l_mypkg_node_draw_color,
-                    fill=\l_mypkg_node_fill_color, minimum~size=\l_mypkg_block_size_dim,
-                    font=\l_mypkg_font_style_tl
-                },
-                row~sep=\l_mypkg_block_sep_dim,
-                column~sep=0mm,
-                inner~sep=0pt,
-                outer~sep=0pt,
+    \int_compare:nNnF{ \property_ref:nn { mypkg/matrix } { last-chapter } } = {0} % add test for no chapter
+    {%
+        \int_step_inline:nn { \property_ref:nn { mypkg/matrix } { last-chapter } } {
+            \int_compare:nNnT { #1 } = { \value{chapter} } {
+                \tl_put_right:Nn \l_mwe_matrix_content_tl { |[fill=\l_mypkg_current_fill_color, draw=\l_mypkg_current_draw_color]| }
             }
-        ]%
-        % \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
-        \if@twoside
-            \ifodd\value{page}\relax
+            \tl_put_right:Nn \l_mwe_matrix_content_tl { #1 \\ }
+        }
+        \begin{tikzpicture}[%
+                overlay,remember~picture,
+                marginpage/.style={%
+                    matrix~of~nodes,
+                    nodes={
+                        align=center,
+                        draw=\l_mypkg_node_draw_color,
+                        fill=\l_mypkg_node_fill_color, 
+                        minimum~size=\l_mypkg_block_size_dim,
+                        font=\l_mypkg_font_style_tl
+                    },
+                    row~sep=\l_mypkg_block_sep_dim,
+                    column~sep=0mm,
+                    inner~sep=0pt,
+                    outer~sep=0pt,
+                }%
+            ]%
+            % \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
+            \if@twoside
+                \ifodd\value{page}\relax
+                    \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
+                \else%
+                    \matrix[anchor=west,marginpage] at (current~page.west){\l_mwe_matrix_content_tl};
+                \fi%
+            \else
                 \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
-            \else%
-                \matrix[anchor=west,marginpage] at (current~page.west){\l_mwe_matrix_content_tl};
-            \fi%
-        \else
-            \matrix[anchor=east,marginpage] at (current~page.east){\l_mwe_matrix_content_tl};
-        \fi
-    \end{tikzpicture}%
+            \fi
+        \end{tikzpicture}%
+    }%
 }
 \ExplSyntaxOff
 
