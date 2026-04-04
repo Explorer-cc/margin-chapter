@@ -3,6 +3,7 @@
 - [X] 修复一下目前的 twocolumn模式存在的中线问题
 - [X] 处理目前的ctex-heading设计与twocolumn的问题
 - [ ] `ctex-format` + `leftmark`的同步绑定问题
+- [ ] 调整数学公式前后间距以匹配整体样式风格
 - [ ] 调整整体页面尺寸以适应更多文本
 - [X] `chapter`不影响双栏且新增一页，`section`以下层级自动实现双栏
 - [ ] 双栏布局细节处理：原版为unbalanced，现版本基于multicols的hook，会自动实现balance
