@@ -7,8 +7,11 @@
 \usepackage{zhlipsum}
 \usepackage{showframe}
 \usepackage{tikz}
-\usetikzlibrary{calc,shapes.geometric,shadows,positioning}
-\tikzset{line cap=round,line join=round,circlewidget/.style={circle,draw,fill=gray!75,inner sep=1.5pt}}
+\usetikzlibrary{arrows.meta,shapes.geometric,shadows,positioning}
+\tikzset{
+    line cap=round,line join=round,
+    >={Circle[open,black,fill=gray!75,length=5pt]}
+    }
 \newcommand\chaptertitleformat[1]{%
     \begin{tikzpicture}[
         orbit/.pic={
@@ -38,14 +41,15 @@
               (0,0) node {\thechapter}
               (-.75,.75) node[scale=.8] {第}
               (.75,-.75) node[scale=.8] {章};
-        \draw[thick] 
-        (2,-.75) node[circlewidget,anchor=west] {}
+        \draw[thick,<->] 
+        (2,-.75)
         -- 
         node[pos=.1,above=10pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\huge,scale=1.25] {#1} 
         % https://tex.stackexchange.com/a/761324
         % https://tex.stackexchange.com/a/761357
-        pic[pos=.85,yshift=.75cm,scale=.75,transform shape] {nuclear}
-        (.9\linewidth,-.75) node[circlewidget,anchor=west] {}
+        pic[pos=.85,yshift=.75cm,scale=.75,transform shape,-] {nuclear}
+        % the `-' here is to elliminate the arrow tip of path that affect the pic
+        (.9\linewidth,-.75)
         ;
     \end{tikzpicture}%
 }
@@ -62,12 +66,12 @@
     \coordinate (start) at ([xshift=.35cm,yshift=.35cm]sec.east);
     \draw[ultra thick,gray!75] ([xshift=-.15cm]start) -- ++(.35,-.7);
     \draw[ultra thick] (start) -- ++(.35,-.7) coordinate (tmp);
-    \draw[ultra thick,gray!75] (tmp) -- 
+    \draw[ultra thick,gray!75,->] (tmp) -- 
     node[xshift=-.4cm,pos=.1,above=3pt,outer sep=0pt,inner sep=0pt,anchor=south west,font=\sffamily\large,text=black,scale=1.25] {#1} 
-    ++(.75\columnwidth,0) node[circlewidget,draw=black,line width=.8pt] (end) {};
-    \draw[gray!25,ultra thick] ([yshift=.4cm]end.center) -- ++(-1cm,0);
-    \draw[gray!75,ultra thick] ([yshift=.6cm]end.center) -- ++(-1.75cm,0);
-    \draw[ultra thick] ([yshift=.8cm]end.center) -- ++(-2.5cm,0);
+    ++(.75\columnwidth,0) coordinate (end);
+    \draw[gray!25,ultra thick] ([yshift=.4cm]end) -- ++(-1cm,0);
+    \draw[gray!75,ultra thick] ([yshift=.6cm]end) -- ++(-1.75cm,0);
+    \draw[ultra thick] ([yshift=.8cm]end) -- ++(-2.5cm,0);
     \end{tikzpicture}
 }
 \newcommand\subsectiontitleformat[1]{%
@@ -76,9 +80,9 @@
         font=\sffamily\Large,text=white,
         inner sep=5pt, 
     ] (subsec) {\thesubsection};
-    \draw[ultra thick] (subsec) 
+    \draw[ultra thick,->] (subsec) 
     -- node[fill=white,pos=.05,anchor=west,font=\sffamily\large] {#1} 
-    ++(.9\columnwidth,0) node[circlewidget,line width=.8pt] {};
+    ++(.9\columnwidth,0);
     \end{tikzpicture}
 }
 \ctexset{
@@ -117,10 +121,8 @@
         \clip ([xshift=5pt]doublestart) rectangle ([xshift=-5pt]doubleend);% clip the double path
         \draw[gray!75,line width=1pt,double,double distance=2.5pt,shorten >=-2pt,shorten <=-2pt] (doublestart) .. controls ++(.25,-.75) and ++(-.3,1) .. (doubleend);
     }
-    \draw[line width=1pt,gray!75] 
-        (ellstart) node[circlewidget,anchor=west] {} -- ([xshift=2pt]doublestart) % details not perfect here ;-(
-        ([xshift=2pt]doubleend) -- (ellend) node[circlewidget,anchor=west] {}
-    ;
+    \draw[line width=1pt,gray!75,<-] (ellstart) -- ([xshift=2pt]doublestart);
+    \draw[line width=1pt,gray!75,->] ([xshift=2pt]doubleend) -- (ellend);
     \end{tikzpicture}
 }
 
@@ -135,7 +137,7 @@
 \zhlipsum[2]
 
 \subsection{APPB}
-\zhlipsum[3]
+\zhlipsum[3-5]
 
 \chapter{我的世界你好你好}
 \SectionPart{测试测试测试}
@@ -146,8 +148,6 @@
 \zhlipsum[2]
 
 \subsection{Hello World}
-\zhlipsum[3]
-
-
+\zhlipsum[3-5]
 
 \end{document}
