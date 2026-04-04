@@ -8,10 +8,10 @@
 \usepackage{etoolbox}%
 \makeatletter
 \g@addto@macro\normalsize{%
-    \setlength\abovedisplayskip{5pt plus 2pt minus 1pt}%
-    \setlength\belowdisplayskip{5pt plus 2pt minus 1pt}%
-    \setlength\abovedisplayshortskip{5pt plus 2pt}%
-    \setlength\belowdisplayshortskip{5pt plus 2pt minus 1pt}%
+    \setlength\abovedisplayskip{3pt plus 2pt minus 1pt}%
+    \setlength\belowdisplayskip{3pt plus 2pt minus 1pt}%
+    \setlength\abovedisplayshortskip{3pt plus 2pt minus 1pt}%
+    \setlength\belowdisplayshortskip{3pt plus 2pt minus 1pt}%
 }
 \makeatother
 
@@ -52,7 +52,6 @@
 \subsection{AAA你好啊啊啊BBB}
 
 \zhlipsum*[1]
-
 \[ 
 \lim_{n \to \infty} \sum_{k=1}^{n} \frac{1}{k} \iint
 \left( \frac{\partial^{2} f(x,y)}{\partial x \partial y} \right) \d x \, \d y 
@@ -60,7 +59,7 @@
 \cdot \operatorname{Tr} \left( \mathbf{A} \otimes \mathbf{B} \right)
 \]
 
-\zhlipsum[2]
+\zhlipsum*[2]
 \begin{align}
 \int_{0}^{1} x^{2} \, \d x 
 &= \left[ \frac{x^{3}}{3} \right]_{0}^{1} \\
